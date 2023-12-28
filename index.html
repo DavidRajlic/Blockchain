@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<h1> BLOCKCHAIN </h1>
+	<button class="btn"> USTVARI BLOK </button>
+	<script>
+		const btn = document.querySelector("button");
+
+	  btn.addEventListener('click', () => {
+      fetch('/najs') // Pošlji GET zahtevo na določeno pot na strežniku
+        .catch(error => console.error(error)); // Ob morebitni napaki izpiši sporočilo v konzolo
+    });
+	</script>
+</body>
+</html>
