@@ -4,7 +4,7 @@ const app = express();
 const sha256 = require('crypto-js/sha256');
 const net = require('net');
 
-const clients = [];
+
 const client = new net.Socket();
 let chain = [];
 let first = true;
@@ -23,23 +23,14 @@ class Block {
 }
 
 function createBlock() {
-	
-	/*client.connect(4000, '127.0.0.1', () => {
+	client.connect(3000, '127.0.0.1', () => {
 		console.log('Povezan s strežnikom');
 		
 		
 	  });
-	  client.on('data', (data) => {
-		console.log('Prejeto od strežnika:');
-		console.log(data.toString());
-		client.end();
-	  });
-	  */
-	 
-	  clients.forEach((client) => {
-		client.write("ful fajnjjj");
 	
-	});
+	
+	console.log("najs");
 	if (first) {
 		let index = 0
 		let data = "Blok 1"
@@ -62,12 +53,6 @@ function createBlock() {
 		chain.push(newBlock)
 		
 	}
-	console.log("najs");
-	/*
-	for (let i = 0; i < chain.length; i++) {
-		console.log(chain[i]);
-	}
-	*/
 	
 }
 app.get('/createBlock', (req, res) => {
@@ -82,7 +67,9 @@ app.get('/createBlock', (req, res) => {
   
 
 
-  
+  client.on('data', (data) => {
+    console.log('Prejeto od strežnika:', data.toString());
+  });
 
   
   client.on('close', () => {
@@ -91,15 +78,15 @@ app.get('/createBlock', (req, res) => {
   
 
 const server = net.createServer((socket) => {
-	clients.push(socket);
+
   socket.on('end', () => {
     console.log('Odjemalec je prekinil povezavo.');
   });
 });
 
-const PORT = 3000;
+const PORT = 5000;
 
-server.listen(3000, "127.0.0.1", () => {
+server.listen(5000, "127.0.0.1", () => {
 	console.log("opened server on", server.address());
   });
 
