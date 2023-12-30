@@ -9,8 +9,11 @@ const client = new net.Socket();
 let chain = [];
 let first = true;
 let currentBlock = null;
+let previousBlock = null;
 let genesisBlock = null;
-
+const timePerBlock = 10;
+const numOfBlocks = 10;
+const timeExpected = timePerBlock * numOfBlocks;
 
 class Block {
 	constructor(index, data, timestamp, hash, previousHash) {
@@ -18,7 +21,7 @@ class Block {
 		this.data = data;
 		this.timestamp = timestamp;
 		this.hash = hash;
-		this.previous = previousHash;
+		this.previousHash = previousHash;
 	}
 }
 
@@ -58,10 +61,15 @@ function createBlock() {
 		let previousHash = currentBlock.hash;
 		let hash = sha256(index + timestamp + data + previousHash);
 		let newBlock = new Block(index, data, timestamp, hash , previousHash);
+		previousBlock = currentBlock;
 		currentBlock = newBlock;
 		chain.push(newBlock)
 		
+
+		console.log(validation(currentBlock, previousBlock));
+		
 	}
+	
 	console.log("najs");
 	/*
 	for (let i = 0; i < chain.length; i++) {
@@ -69,6 +77,16 @@ function createBlock() {
 	}
 	*/
 	
+}
+
+function validation(currentBlock, previousBlock) {
+if (currentBlock.previousHash == previousBlock.hash)
+ {
+	return true;
+ }
+ else {
+	return false;
+ }
 }
 app.get('/createBlock', (req, res) => {
 	const result = createBlock();
