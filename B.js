@@ -22,12 +22,16 @@ class Block {
 	}
 }
 
-function createBlock() {
-	client.connect(3000, '127.0.0.1', () => {
+function connect() {
+	client.connect(3001, '127.0.0.2', () => {
 		console.log('Povezan s strežnikom');
 		
 		
 	  });
+}
+
+function createBlock() {
+	
 	
 	
 	console.log("najs");
@@ -65,7 +69,10 @@ app.get('/createBlock', (req, res) => {
 	res.sendFile(path.join(__dirname, 'index.html'));
   });
   
-
+	app.get('/connect', (req, res) => {
+		const result = connect();
+		res.json({ result });
+		});
 
   client.on('data', (data) => {
     console.log('Prejeto od strežnika:', data.toString());
@@ -86,7 +93,7 @@ const server = net.createServer((socket) => {
 
 const PORT = 4000;
 
-server.listen(4000, "127.0.0.1", () => {
+server.listen(4001, "127.0.0.1", () => {
 	console.log("opened server on", server.address());
   });
 

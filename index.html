@@ -7,12 +7,25 @@
 </head>
 <body>
 	<h1> BLOCKCHAIN </h1>
-	<button class="btn"> USTVARI BLOK </button>
+	<button class="btn"> MINING </button>
+	<button id="connect"> CONNECT </button>
+	<button id="stop"> STOP </button>
 	<script>
+		const connect = document.getElementById("connect"); 
 		const btn = document.querySelector("button");
-
+		const stop1 = document.getElementById("stop"); 
 	  btn.addEventListener('click', () => {
-      fetch('/najs') // Pošlji GET zahtevo na določeno pot na strežniku
+      fetch('/createBlock') // Pošlji GET zahtevo na določeno pot na strežniku
+        .catch(error => console.error(error)); // Ob morebitni napaki izpiši sporočilo v konzolo
+    });
+
+		stop1.addEventListener('click', () => {
+      fetch('/stop') // Pošlji GET zahtevo na določeno pot na strežniku
+        .catch(error => console.error(error)); // Ob morebitni napaki izpiši sporočilo v konzolo
+    });
+
+		connect.addEventListener('click', () => {
+      fetch('/connect') // Pošlji GET zahtevo na določeno pot na strežniku
         .catch(error => console.error(error)); // Ob morebitni napaki izpiši sporočilo v konzolo
     });
 	</script>
